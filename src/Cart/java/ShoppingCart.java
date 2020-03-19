@@ -48,59 +48,17 @@ public class ShoppingCart {
         this.printItems();
 
         System.out.println("------------------------------------------------");
-        int itemNumber = this.gatherIntInput("Enter item number to purchase: ", 4, 1);
+        int itemNumber = GatherInput.gatherIntInput("Enter item number to purchase: ", 4, 1);
         Item item = this.itemsInStock.get(itemNumber - 1);
-        item.quantity = this.gatherIntInput("Quantity: ", null, 1);
+        item.quantity = GatherInput.gatherIntInput("Quantity: ", null, 1);
         this.itemsPurchased.add(item);
 
-        boolean confirmCheckout = this.gatherBooleanInput("Enter 1 to buy more items or Enter 2 to go to checkout: ");
+        boolean confirmCheckout = GatherInput.gatherBooleanInput("Enter 1 to buy more items or Enter 2 to go to checkout: ");
         if (confirmCheckout) {
             askItems();
         } else {
             checkOut();
         }
-    }
-
-    private boolean gatherBooleanInput(String message) {
-        int result = this.gatherIntInput(message, 2, 1);
-        return result == 1;
-    }
-
-    private int gatherIntInput(String message) {
-        return this.gatherIntInput(message, null, null);
-    }
-
-    private int gatherIntInput(String message, Integer max) {
-        return this.gatherIntInput(message, max, null);
-    }
-
-    private int gatherIntInput(String message, Integer max, Integer min) {
-        Scanner kb = new Scanner(System.in);
-        System.out.println(message);
-
-        int result = 0;
-        try {
-            result = kb.nextInt();
-        } catch (Exception ex) {
-            this.showErrorMessage("Enter valid value");
-            result = this.gatherIntInput(message, max, min);
-        }
-
-        if (max != null && result > max) {
-            this.showErrorMessage("Enter a value less than or equal to " + max);
-            result = this.gatherIntInput(message, max, min);
-        }
-
-        if (min != null && result < min) {
-            this.showErrorMessage("Enter a value more than " + min);
-            result = this.gatherIntInput(message, max, min);
-        }
-
-        return result;
-    }
-
-    private void showErrorMessage(String message) {
-        System.out.println("Error: " + message);
     }
 
     private void printItems() {
@@ -128,7 +86,7 @@ public class ShoppingCart {
     }
 
     private void confirmPurchase() {
-        int checkoutOption = this.gatherIntInput(this.createConfirmPurchaseOptions(), 4, 1);
+        int checkoutOption = GatherInput.gatherIntInput(this.createConfirmPurchaseOptions(), 4, 1);
         if (checkoutOption == CheckoutOptions.CONFIRM_CHECKOUT.getLevelCode()) {
             System.out.println("Thank You for Shopping!");
         } else if (checkoutOption == CheckoutOptions.PURCHASE_MORE.getLevelCode()) {
@@ -137,7 +95,7 @@ public class ShoppingCart {
             this.removePurchasedItem();
             this.checkOut();
         } else {
-            String discountCoupon = this.gatherStringInput("Enter discount coupon:");
+            String discountCoupon = GatherInput.gatherStringInput("Enter discount coupon:");
             this.itemsPurchased.forEach((item -> item.applyDiscount(this.getDiscountCoupon(discountCoupon))));
             this.checkOut();
         }
@@ -151,14 +109,8 @@ public class ShoppingCart {
         }
     }
 
-    private String gatherStringInput(String message) {
-        Scanner kb = new Scanner(System.in);
-        System.out.println(message);
-        return kb.next();
-    }
-
     private void removePurchasedItem() {
-        int itemNumber = this.gatherIntInput("Which item in the cart would you like to remove?: ", this.itemsPurchased.size(), 1);
+        int itemNumber = GatherInput.gatherIntInput("Which item in the cart would you like to remove?: ", this.itemsPurchased.size(), 1);
         this.itemsPurchased.remove(itemNumber - 1);
     }
 
