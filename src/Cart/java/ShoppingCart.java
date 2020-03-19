@@ -3,8 +3,8 @@ package Cart.java;
 import java.util.*;
 
 public class ShoppingCart {
-    List<Item> itemsPurchased = new ArrayList<Item>();
     List<Item> itemsInStock = new ArrayList<Item>();
+    private ItemsPurchased itemsPurchased = new ItemsPurchased();
 
     public ShoppingCart() {
         this.addItemsInStock();
@@ -13,14 +13,9 @@ public class ShoppingCart {
     private void checkOut() {
         System.out.println("==========Checkout==========");
 
-        double totalWithoutTax = 0;
-        double discountTotal = 0;
-        for (int i = 0; i < this.itemsPurchased.size(); i++) {
-            Item item = this.itemsPurchased.get(i);
-            item.printCheckoutItems();
-            totalWithoutTax += item.getTotalPrice();
-            discountTotal += item.getDiscount();
-        }
+        double totalWithoutTax = itemsPurchased.getTotalWithoutTax();
+        double discountTotal = itemsPurchased.getDiscountTotal();
+        itemsPurchased.printItems();
 
         System.out.println();
         System.out.println("----------------------------");
@@ -51,7 +46,7 @@ public class ShoppingCart {
         int itemNumber = GatherInput.gatherIntInput("Enter item number to purchase: ", 4, 1);
         Item item = this.itemsInStock.get(itemNumber - 1);
         item.quantity = GatherInput.gatherIntInput("Quantity: ", null, 1);
-        this.itemsPurchased.add(item);
+        this.itemsPurchased.purchaseItem(item);
 
         boolean confirmCheckout = GatherInput.gatherBooleanInput("Enter 1 to buy more items or Enter 2 to go to checkout: ");
         if (confirmCheckout) {
@@ -92,25 +87,12 @@ public class ShoppingCart {
         } else if (checkoutOption == CheckoutOptions.PURCHASE_MORE.getLevelCode()) {
             this.askItems();
         } else if (checkoutOption == CheckoutOptions.REMOVE_ITEM.getLevelCode()) {
-            this.removePurchasedItem();
+            this.itemsPurchased.askToRemove();
             this.checkOut();
         } else {
             String discountCoupon = GatherInput.gatherStringInput("Enter discount coupon:");
-            this.itemsPurchased.forEach((item -> item.applyDiscount(this.getDiscountCoupon(discountCoupon))));
+            this.itemsPurchased.applyDiscount(discountCoupon);
             this.checkOut();
         }
-    }
-
-    private DiscountCoupons getDiscountCoupon(String coupon) {
-        try {
-            return DiscountCoupons.valueOf(coupon);
-        } catch (Exception ex) {
-            return DiscountCoupons.NONE;
-        }
-    }
-
-    private void removePurchasedItem() {
-        int itemNumber = GatherInput.gatherIntInput("Which item in the cart would you like to remove?: ", this.itemsPurchased.size(), 1);
-        this.itemsPurchased.remove(itemNumber - 1);
     }
 }
