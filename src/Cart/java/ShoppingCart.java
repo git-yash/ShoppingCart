@@ -6,6 +6,10 @@ public class ShoppingCart {
     List<Item> itemsPurchased = new ArrayList<Item>();
     List<Item> itemsInStock = new ArrayList<Item>();
 
+    public ShoppingCart() {
+        this.addItemsInStock();
+    }
+
     private void checkOut() {
         System.out.println("==========Checkout==========");
 
@@ -38,10 +42,6 @@ public class ShoppingCart {
         System.out.println();
 
         this.confirmPurchase();
-    }
-
-    public ShoppingCart() {
-        this.addItemsInStock();
     }
 
     public void askItems() {
@@ -112,22 +112,5 @@ public class ShoppingCart {
     private void removePurchasedItem() {
         int itemNumber = GatherInput.gatherIntInput("Which item in the cart would you like to remove?: ", this.itemsPurchased.size(), 1);
         this.itemsPurchased.remove(itemNumber - 1);
-    }
-
-    private enum CheckoutOptions {
-        PURCHASE_MORE(1),
-        DISCOUNT_CODE(2),
-        CONFIRM_CHECKOUT(3),
-        REMOVE_ITEM(4);
-
-        private final int option;
-
-        CheckoutOptions(int option) {
-            this.option = option;
-        }
-
-        public int getLevelCode() {
-            return this.option;
-        }
     }
 }
