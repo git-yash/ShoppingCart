@@ -13,22 +13,8 @@ public class Item {
         this.price = price;
     }
 
-    public void applyDiscount(DiscountCoupons discountCoupons) {
-        switch (discountCoupons) {
-            case DISCOUNT10:
-                this.discountPercent = 10;
-                break;
-            case DISCOUNT20:
-                this.discountPercent = 20;
-                break;
-            case DISCOUNT30:
-                this.discountPercent = 30;
-                break;
-            case NONE:
-            default:
-                this.discountPercent = 0;
-                break;
-        }
+    public void applyDiscount(DiscountCoupons discountCoupon) {
+        this.discountPercent = DiscountCoupons.getDiscount(discountCoupon);
     }
 
     public double getDiscount() {
