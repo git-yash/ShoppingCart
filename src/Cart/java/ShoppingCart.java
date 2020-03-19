@@ -6,6 +6,40 @@ public class ShoppingCart {
     List<Item> itemsPurchased = new ArrayList<Item>();
     List<Item> itemsInStock = new ArrayList<Item>();
 
+    private void checkOut() {
+        System.out.println("==========Checkout==========");
+
+        double totalWithoutTax = 0;
+        double discountTotal = 0;
+        for (int i = 0; i < this.itemsPurchased.size(); i++) {
+            Item item = this.itemsPurchased.get(i);
+            item.printCheckoutItems();
+            totalWithoutTax += item.getTotalPrice();
+            discountTotal += item.getDiscount();
+        }
+
+        System.out.println();
+        System.out.println("----------------------------");
+        System.out.printf("Subtotal: $%.2f", totalWithoutTax);
+        System.out.println();
+
+        if (discountTotal > 0) {
+            System.out.printf("Discount: - $%.2f", discountTotal);
+            System.out.println();
+        }
+
+        double taxTotal = (totalWithoutTax - discountTotal) * 0.0825;
+        System.out.printf("Tax: $%.2f", taxTotal);
+        System.out.println();
+
+        System.out.printf("Total: $%.2f", (totalWithoutTax - discountTotal) + taxTotal);
+        System.out.println();
+        System.out.println("----------------------------");
+        System.out.println();
+
+        this.confirmPurchase();
+    }
+
     public ShoppingCart() {
         this.addItemsInStock();
     }
@@ -82,35 +116,66 @@ public class ShoppingCart {
         this.itemsInStock.add(new Item("Iphone Charger", "This is an Iphone Charger", 12.99));
     }
 
-    private void checkOut() {
-        System.out.println("==========Checkout==========");
+    private String createConfirmPurchaseOptions() {
+        ArrayList<String> options = new ArrayList<String>();
 
-        double totalWithoutTax = 0;
-        for (int i = 0; i < this.itemsPurchased.size(); i++) {
-            Item item = this.itemsPurchased.get(i);
-            item.printCheckoutItems();
-            totalWithoutTax += item.getTotalPrice();
+        options.add("Enter " + CheckoutOptions.PURCHASE_MORE.getLevelCode() + " to purchase more");
+        options.add("Enter " + CheckoutOptions.DISCOUNT_CODE.getLevelCode() + " to apply a discount code");
+        options.add("Enter " + CheckoutOptions.CONFIRM_CHECKOUT.getLevelCode() + " to confirm purchase");
+        options.add("Enter " + CheckoutOptions.REMOVE_ITEM.getLevelCode() + " to remove an item: ");
+
+        return String.join(" | ", options);
+    }
+
+    private void confirmPurchase() {
+        int checkoutOption = this.gatherIntInput(this.createConfirmPurchaseOptions(), 4, 1);
+        if (checkoutOption == CheckoutOptions.CONFIRM_CHECKOUT.getLevelCode()) {
+            System.out.println("Thank You for Shopping!");
+        } else if (checkoutOption == CheckoutOptions.PURCHASE_MORE.getLevelCode()) {
+            this.askItems();
+        } else if (checkoutOption == CheckoutOptions.REMOVE_ITEM.getLevelCode()) {
+            this.removePurchasedItem();
+            this.checkOut();
+        } else {
+            String discountCoupon = this.gatherStringInput("Enter discount coupon:");
+            this.itemsPurchased.forEach((item -> item.applyDiscount(this.getDiscountCoupon(discountCoupon))));
+            this.checkOut();
+        }
+    }
+
+    private DiscountCoupons getDiscountCoupon(String coupon) {
+        try {
+            return DiscountCoupons.valueOf(coupon);
+        } catch (Exception ex) {
+            return DiscountCoupons.NONE;
+        }
+    }
+
+    private String gatherStringInput(String message) {
+        Scanner kb = new Scanner(System.in);
+        System.out.println(message);
+        return kb.next();
+    }
+
+    private void removePurchasedItem() {
+        int itemNumber = this.gatherIntInput("Which item in the cart would you like to remove?: ", this.itemsPurchased.size(), 1);
+        this.itemsPurchased.remove(itemNumber - 1);
+    }
+
+    private enum CheckoutOptions {
+        PURCHASE_MORE(1),
+        DISCOUNT_CODE(2),
+        CONFIRM_CHECKOUT(3),
+        REMOVE_ITEM(4);
+
+        private final int option;
+
+        CheckoutOptions(int option) {
+            this.option = option;
         }
 
-        System.out.println();
-        System.out.println("----------------------------");
-        System.out.printf("Subtotal: $%.2f", totalWithoutTax);
-        System.out.println();
-
-        double taxTotal = totalWithoutTax * 0.0825;
-        System.out.printf("Tax: $%.2f", taxTotal);
-        System.out.println();
-
-        System.out.printf("Total: $%.2f", totalWithoutTax + taxTotal);
-        System.out.println();
-        System.out.println("----------------------------");
-        System.out.println();
-
-        int confirmPurchase = this.gatherIntInput("Enter 1 to confirm purchase or Enter 2 to purchase more: ", 2, 1);
-        if (confirmPurchase == 1) {
-            System.out.println("Thank You for Shopping!");
-        } else {
-            askItems();
+        public int getLevelCode() {
+            return this.option;
         }
     }
 }

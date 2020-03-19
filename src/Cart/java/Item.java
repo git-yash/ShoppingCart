@@ -1,15 +1,42 @@
 package Cart.java;
 
 public class Item {
-    public int quantity;
     public String title;
     public String description;
     public double price;
+    public int quantity;
+    private int discountPercent;
 
     public Item(String title, String description, double price) {
         this.title = title;
         this.description = description;
         this.price = price;
+    }
+
+    public void applyDiscount(DiscountCoupons discountCoupons) {
+        switch (discountCoupons) {
+            case DISCOUNT10:
+                this.discountPercent = 10;
+                break;
+            case DISCOUNT20:
+                this.discountPercent = 20;
+                break;
+            case DISCOUNT30:
+                this.discountPercent = 30;
+                break;
+            case NONE:
+            default:
+                this.discountPercent = 0;
+                break;
+        }
+    }
+
+    public double getDiscount() {
+        if (this.discountPercent > 0) {
+            return this.discountPercent * this.quantity * this.price / 100;
+        } else {
+            return 0;
+        }
     }
 
     public double getTotalPrice() {
