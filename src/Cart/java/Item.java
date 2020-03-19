@@ -17,7 +17,7 @@ public class Item {
     }
 
     public void printItem(int itemNumber) {
-        System.out.println(itemNumber + "." + this.title + ": " + this.description + "| $" + this.price);
+        System.out.println(itemNumber + ". " + this.title + ": " + this.description + " | $" + this.price);
     }
 
     public void printCheckoutItems() {
