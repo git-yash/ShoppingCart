@@ -1,4 +1,4 @@
-package Cart.java;
+package main;
 
 public enum DiscountCoupons {
     DISCOUNT10,

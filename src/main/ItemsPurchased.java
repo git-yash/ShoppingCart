@@ -1,15 +1,14 @@
-package Cart.java;
+package main;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsPurchased {
-    private List<Item> itemsPurchased = new ArrayList<Item>();
+    private List<Item> itemsPurchased = new ArrayList<>();
 
     public double getTotalWithoutTax() {
         double totalWithoutTax = 0;
-        for (int i = 0; i < this.itemsPurchased.size(); i++) {
-            Item item = this.itemsPurchased.get(i);
+        for (Item item : this.itemsPurchased) {
             totalWithoutTax += item.getTotalPrice();
         }
         return totalWithoutTax;
@@ -17,15 +16,14 @@ public class ItemsPurchased {
 
     public double getDiscountTotal() {
         double total = 0;
-        for (int i = 0; i < this.itemsPurchased.size(); i++) {
-            Item item = this.itemsPurchased.get(i);
+        for (Item item : this.itemsPurchased) {
             total += item.getDiscount();
         }
         return total;
     }
 
     public void printItems() {
-        this.itemsPurchased.forEach((item -> item.printCheckoutItems()));
+        this.itemsPurchased.forEach((item -> System.out.println(item.getCheckoutDetail())));
     }
 
     public void purchaseItem(Item item) {

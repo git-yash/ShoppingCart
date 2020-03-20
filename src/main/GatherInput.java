@@ -1,4 +1,4 @@
-package Cart.java;
+package main;
 
 import java.util.Scanner;
 
@@ -20,7 +20,7 @@ public class GatherInput {
         Scanner kb = new Scanner(System.in);
         System.out.println(message);
 
-        int result = 0;
+        int result;
         try {
             result = kb.nextInt();
         } catch (Exception ex) {

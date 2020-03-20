@@ -1,10 +1,10 @@
-package Cart.java;
+package main;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsInStock {
-    private List<Item> itemsInStock = new ArrayList<Item>();
+    private List<Item> itemsInStock = new ArrayList<>();
 
     public ItemsInStock() {
         this.addItemsInStock();
@@ -19,7 +19,7 @@ public class ItemsInStock {
 
     public void printItems() {
         for (int i = 0; i < this.itemsInStock.size(); i++) {
-            this.itemsInStock.get(i).printItem(i + 1);
+            System.out.println(this.itemsInStock.get(i).getItemDetail(i + 1));
         }
     }
 

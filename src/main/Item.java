@@ -1,4 +1,4 @@
-package Cart.java;
+package main;
 
 public class Item {
     public String title;
@@ -29,11 +29,11 @@ public class Item {
         return this.quantity * this.price;
     }
 
-    public void printItem(int itemNumber) {
-        System.out.println(itemNumber + ". " + this.title + ": " + this.description + " | $" + this.price);
+    public String getItemDetail(int itemNumber) {
+        return itemNumber + ". " + this.title + ": " + this.description + " | $" + this.price;
     }
 
-    public void printCheckoutItems() {
-        System.out.printf("(" + this.quantity + " x " + this.price + ") %.2f --- " + this.title + "\n", this.getTotalPrice());
+    public String getCheckoutDetail() {
+        return String.format("(" + this.quantity + " x " + this.price + ") %.2f --- " + this.title, this.getTotalPrice());
     }
 }

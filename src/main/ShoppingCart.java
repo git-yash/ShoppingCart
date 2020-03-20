@@ -1,4 +1,4 @@
-package Cart.java;
+package main;
 
 public class ShoppingCart {
     private ItemsPurchased itemsPurchased = new ItemsPurchased();

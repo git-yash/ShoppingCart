@@ -1,4 +1,4 @@
-package Cart.java;
+package main;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public enum CheckoutOptions {
     }
 
     public static String createConfirmPurchaseOptions() {
-        ArrayList<String> options = new ArrayList<String>();
+        ArrayList<String> options = new ArrayList<>();
 
         options.add("Enter " + CheckoutOptions.PURCHASE_MORE.getLevelCode() + " to purchase more");
         options.add("Enter " + CheckoutOptions.DISCOUNT_CODE.getLevelCode() + " to apply a discount code");
