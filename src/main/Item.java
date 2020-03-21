@@ -19,7 +19,8 @@ public class Item {
 
     public double getDiscount() {
         if (this.discountPercent > 0) {
-            return this.discountPercent * this.quantity * this.price / 100;
+            double discount = this.discountPercent * this.quantity * this.price / 100;
+            return Math.round(discount * 100.0) / 100.0;
         } else {
             return 0;
         }

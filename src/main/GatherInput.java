@@ -8,14 +8,6 @@ public class GatherInput {
         return result == 1;
     }
 
-    public static int gatherIntInput(String message) {
-        return GatherInput.gatherIntInput(message, null, null);
-    }
-
-    public static int gatherIntInput(String message, Integer max) {
-        return GatherInput.gatherIntInput(message, max, null);
-    }
-
     public static int gatherIntInput(String message, Integer max, Integer min) {
         Scanner kb = new Scanner(System.in);
         System.out.println(message);
