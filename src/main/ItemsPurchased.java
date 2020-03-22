@@ -34,6 +34,7 @@ public class ItemsPurchased {
         this.itemsPurchased.forEach((item -> item.applyDiscount(this.getDiscountCoupon(coupon))));
     }
 
+    // TODO: YMS - add test for this method
     public void askToRemove() {
         int itemNumber = GatherInput.gatherIntInput("Which item in the cart would you like to remove?: ", this.itemsPurchased.size(), 1);
         this.itemsPurchased.remove(itemNumber - 1);

@@ -35,6 +35,37 @@ public class ItemsPurchasedTest {
     }
 
     @Test
+    public void askToRemoveTest() {
+        // setup
+        this.itemsPurchased.purchaseItem(createMockItem(9.99, 2));
+        this.itemsPurchased.purchaseItem(createMockItem(19.99, 1));
+
+        // exercise
+    }
+
+    @Test
+    public void applyDiscountTest() {
+        // setup
+        this.itemsPurchased.purchaseItem(createMockItem(9.99, 2));
+        this.itemsPurchased.purchaseItem(createMockItem(19.99, 1));
+
+        // pre-conditions
+        assertEquals(0, this.itemsPurchased.getDiscountTotal(), 0);
+
+        // exercise
+        this.itemsPurchased.applyDiscount("INVALID_DISCOUNT10");
+
+        // post-conditions
+        assertEquals(0, this.itemsPurchased.getDiscountTotal(), 0);
+
+        // exercise
+        this.itemsPurchased.applyDiscount("DISCOUNT10");
+
+        // post-conditions
+        assertEquals(4, this.itemsPurchased.getDiscountTotal(), 0);
+    }
+
+    @Test
     public void printCheckoutTest() {
         // setup
         this.itemsPurchased.purchaseItem(createMockItem(9.99, 2));
@@ -46,17 +77,17 @@ public class ItemsPurchasedTest {
         this.itemsPurchased.printCheckout();
 
         // post-conditions
-        assertEquals(outContent.toString(), "==========Checkout==========\r\n" +
-                "(2 x 9.99) 19.98 --- Item\r\n" +
-                "(4 x 19.99) 79.96 --- Item\r\n" +
-                "\r\n" +
-                "----------------------------\r\n" +
-                "Subtotal: $99.94\r\n" +
-                "Discount: - $15.99\r\n" +
-                "Tax: $6.93\r\n" +
-                "Total: $90.88\r\n" +
-                "----------------------------\r\n" +
-                "\r\n");
+        assertEquals(outContent.toString(), "==========Checkout==========\n" +
+                "(2 x 9.99) 19.98 --- Item\n" +
+                "(4 x 19.99) 79.96 --- Item\n" +
+                "\n" +
+                "----------------------------\n" +
+                "Subtotal: $99.94\n" +
+                "Discount: - $15.99\n" +
+                "Tax: $6.93\n" +
+                "Total: $90.88\n" +
+                "----------------------------\n" +
+                "\n");
     }
 
     @Test

@@ -27,10 +27,10 @@ public class ItemsInStockTest {
         itemsInStock.printItems();
 
         // post-conditions
-        assertEquals("1. Gel Pen: This is a gel pen | $3.99\r\n" +
-                "2. Stapler: This is a stapler | $5.99\r\n" +
-                "3. Notepad: This is a notepad | $6.99\r\n" +
-                "4. Iphone Charger: This is an Iphone Charger | $12.99\r\n", outContent.toString());
+        assertEquals("1. Gel Pen: This is a gel pen | $3.99\n" +
+                "2. Stapler: This is a stapler | $5.99\n" +
+                "3. Notepad: This is a notepad | $6.99\n" +
+                "4. Iphone Charger: This is an Iphone Charger | $12.99\n", outContent.toString());
     }
 
     @Test
