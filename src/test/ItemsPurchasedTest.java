@@ -78,8 +78,8 @@ public class ItemsPurchasedTest {
 
         // post-conditions
         assertEquals(outContent.toString(), "==========Checkout==========\n" +
-                "(2 x 9.99) 19.98 --- Item\n" +
-                "(4 x 19.99) 79.96 --- Item\n" +
+                "1. (2 x 9.99) 19.98 --- Item\n" +
+                "2. (4 x 19.99) 79.96 --- Item\n" +
                 "\n" +
                 "----------------------------\n" +
                 "Subtotal: $99.94\n" +

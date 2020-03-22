@@ -34,7 +34,7 @@ public class Item {
         return itemNumber + ". " + this.title + ": " + this.description + " | $" + this.price;
     }
 
-    public String getCheckoutDetail() {
-        return String.format("(" + this.quantity + " x " + this.price + ") %.2f --- " + this.title, this.getTotalPrice());
+    public String getCheckoutDetail(int itemNumber) {
+        return String.format(itemNumber + ". (" + this.quantity + " x " + this.price + ") %.2f --- " + this.title, this.getTotalPrice());
     }
 }

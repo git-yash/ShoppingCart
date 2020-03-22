@@ -27,7 +27,7 @@ public class ShoppingCart {
     }
 
     private void confirmPurchase() {
-        int checkoutOption = GatherInput.gatherIntInput(CheckoutOptions.createConfirmPurchaseOptions(), 4, 1);
+        int checkoutOption = GatherInput.gatherIntInput(CheckoutOptions.createConfirmPurchaseOptions(), 5, 1);
         if (checkoutOption == CheckoutOptions.CONFIRM_CHECKOUT.getLevelCode()) {
             System.out.println("Thank You for Shopping!");
         } else if (checkoutOption == CheckoutOptions.PURCHASE_MORE.getLevelCode()) {
@@ -35,9 +35,12 @@ public class ShoppingCart {
         } else if (checkoutOption == CheckoutOptions.REMOVE_ITEM.getLevelCode()) {
             this.itemsPurchased.askToRemove();
             this.checkOut();
-        } else {
+        } else if (checkoutOption == CheckoutOptions.DISCOUNT_CODE.getLevelCode()) {
             String discountCoupon = GatherInput.gatherStringInput("Enter discount coupon:");
             this.itemsPurchased.applyDiscount(discountCoupon);
+            this.checkOut();
+        } else {
+            this.itemsPurchased.askToChangeQty();
             this.checkOut();
         }
     }

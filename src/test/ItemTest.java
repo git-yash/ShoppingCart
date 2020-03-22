@@ -26,7 +26,7 @@ public class ItemTest {
         item.quantity = 1;
 
         // exercise
-        assertEquals(item.getCheckoutDetail(), "(1 x 10.0) 10.00 --- Gel Pen");
+        assertEquals(item.getCheckoutDetail(1), "1. (1 x 10.0) 10.00 --- Gel Pen");
     }
 
     @Test

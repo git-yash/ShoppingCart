@@ -23,7 +23,9 @@ public class ItemsPurchased {
     }
 
     public void printItems() {
-        this.itemsPurchased.forEach((item -> System.out.println(item.getCheckoutDetail())));
+        for (int i = 0; i < this.itemsPurchased.size(); i++) {
+            System.out.println(this.itemsPurchased.get(i).getCheckoutDetail(i + 1));
+        }
     }
 
     public void purchaseItem(Item item) {
@@ -32,6 +34,15 @@ public class ItemsPurchased {
 
     public void applyDiscount(String coupon) {
         this.itemsPurchased.forEach((item -> item.applyDiscount(this.getDiscountCoupon(coupon))));
+    }
+
+    // TODO: YMS - add test for this method
+    public void askToChangeQty() {
+        int itemNumber = GatherInput.gatherIntInput("Which item would you like to change the quantity of?: ", this.itemsPurchased.size(), 1);
+        Item item = this.itemsPurchased.get(itemNumber - 1);
+
+        int quantity = GatherInput.gatherIntInput("Enter the new quantity: ", null, 1);
+        item.quantity = quantity;
     }
 
     // TODO: YMS - add test for this method
